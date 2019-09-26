@@ -1,0 +1,7 @@
+columns:
+    rex_id:
+        label: 'Rex ID'
+        type: text
+    address:
+        label: Address
+        type: text

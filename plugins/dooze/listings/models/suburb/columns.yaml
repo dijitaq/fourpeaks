@@ -1,0 +1,4 @@
+columns:
+    suburb_name:
+        label: 'Suburb Name'
+        type: text

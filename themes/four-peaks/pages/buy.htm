@@ -1,0 +1,94 @@
+title = "Buy"
+url = "/buy"
+layout = "default"
+meta_title = "Four Peaks Real Estate - Take a look at our properties for sale."
+meta_description = "The local area is such a beautiful place & the properties we have for sale are no exception."
+is_hidden = 0
+
+[builderList]
+modelClass = "Dooze\Listings\Models\Listing"
+scope = "scopeApplyBuy"
+scopeValue = "{{ :scope }}"
+displayColumn = "title"
+noRecordsMessage = "There are no listing available for sale"
+detailsPage = "listings-single"
+detailsKeyColumn = "slug"
+detailsUrlParameter = "slug"
+pageNumber = "{{ :page }}"
+sortColumn = "ctime"
+sortDirection = "desc"
+==
+<?php
+function onStart()
+{
+  $this['time'] = time();
+}
+?>
+==
+{% set records = builderList.records %}
+
+{% set displayColumn = builderList.displayColumn %}
+
+{% set noRecordsMessage = builderList.noRecordsMessage %}
+
+{% set detailsPage = builderList.detailsPage %}
+
+{% set detailsKeyColumn = builderList.detailsKeyColumn %}
+
+{% set detailsUrlParameter = builderList.detailsUrlParameter %}
+
+<section id="listings">
+    <div class="grid-container content">
+        <div class="grid-x grid-margin-x">
+            <div class="cell large-4">
+                <!--cOntent -->
+                <h2></h2>
+                <!--content -->
+            </div>
+
+            <div class="cell large-8">
+                {% partial "page/buy-content.htm" %}
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-container listings">
+        <div class="grid-x grid-margin-x small-up-1 medium-up-2 large-up-3">
+            {% for record in records %}
+                <div class="cell">
+                    {% spaceless %}
+                        {% if detailsPage %}
+                            <a href="{{ detailsPage|page({ rex_id: record.rex_id, slug: record.slug }) }}">
+                        {% endif %}
+                                <img src="{{ record.image_path ~ record.poster_image }}">
+
+                                <span>
+                                    <span class="title">{{ record.suburb }}<br><small>{{ record.address }}</small></span>
+                                    
+                                    {% if record.events %}
+                                        {% set break = false %}
+                                        {% for event in record.events if not break %}
+                                            {% set t = time %}
+                                            {% set l_t = event[3].event_unix_time %}
+                                            {% if (l_t > t) %}
+                                                <span class="inspection">{{ event[0].display ~ " " ~ event[1].event_date ~ " " ~ event[2].event_time }}</span>
+
+                                                {% set break = true %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </span>
+                        {% if detailsPage %}
+                            </a>
+                        {% endif %}
+                    {% endspaceless %}
+                </div>
+
+            {% else %}
+                <div class="cell">
+                    <p>{{ noRecordsMessage }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

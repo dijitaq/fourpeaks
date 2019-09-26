@@ -1,0 +1,19 @@
+name: 'Four Peaks'
+description: ''
+author: ''
+homepage: ''
+code: ''
+form:
+    fields:
+        desktop_image:
+            type: fileupload
+            mode: image
+            label: Upload homepage desktop image (image must be 1920px x 1080 px)
+        tablet_image:
+            type: fileupload
+            mode: image
+            label: Upload homepage tablet image (image must be 1536px x 2048 px)
+        mobile_image:
+            type: fileupload
+            mode: image
+            label: Upload homepage large image (image must be 750px x 1334 px)

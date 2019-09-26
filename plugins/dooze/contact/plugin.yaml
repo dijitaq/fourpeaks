@@ -1,0 +1,6 @@
+plugin:
+    name: 'dooze.contact::lang.plugin.name'
+    description: 'dooze.contact::lang.plugin.description'
+    author: 'Firdaus Riyanto'
+    icon: oc-icon-inbox
+    homepage: ''

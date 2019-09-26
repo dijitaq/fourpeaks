@@ -1,0 +1,21 @@
+fields:
+    rex_id:
+        label: 'Rex ID'
+        span: auto
+        type: text
+    address:
+        label: Address
+        span: auto
+        type: text
+    file:
+        label: 'XML file url'
+        span: full
+        type: text
+    mod_date:
+        label: 'Date modified'
+        span: auto
+        type: text
+    mod_time:
+        label: 'Time modified'
+        span: auto
+        type: text

@@ -1,0 +1,5 @@
+columns:
+    address:
+        label: Listing
+        type: text
+        searchable: true

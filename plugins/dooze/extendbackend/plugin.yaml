@@ -1,0 +1,6 @@
+plugin:
+    name: 'dooze.extendbackend::lang.plugin.name'
+    description: 'dooze.extendbackend::lang.plugin.description'
+    author: 'Agency3'
+    icon: oc-icon-file
+    homepage: 'https://agency3.com.au'

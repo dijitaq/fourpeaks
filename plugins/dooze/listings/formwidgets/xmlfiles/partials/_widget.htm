@@ -1,0 +1,260 @@
+<style>
+    select {
+        width: 100%;
+    }
+
+    select option {
+        width: 100%;
+    }
+
+    select option span {
+        display: inline-block;
+        float: left;
+    }
+
+    select option span:last-child {
+        float: right;
+    }
+
+    .alert {
+        background-color: #e1faea;
+        padding: 15px;
+        display: block;
+        position: relative;
+        border: 1px solid rgba(0,0,0,0.25);
+    }
+
+    .alert.update {
+        background-color: #f7e4e1;
+    }
+
+    .alert p {
+        color: #0a0a0a;
+        line-height: 32px;
+        height: 32px;
+        margin: 0;
+        display: inline-block;
+        float: left;
+    }
+
+    .alert button {
+        font-weight: 600;
+        background-color: transparent;
+        padding: 5px 15px;
+        float: right;
+        border: 1px solid rgba(0,0,0,0.25);
+        border-radius: 4px;
+    }
+
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+</style>
+
+<div class="wrapper">
+    <?php if($display_list) { ?>
+        <select id="listing-option">
+            <option>Choose XML file</option>
+
+            <?php foreach($xmlfiles as $xmlfile): ?>
+                <option class="clearfix" value="<?php echo $xmlfile['id']; ?>" data-file="<?php echo asset('storage/app/media/' . $xmlfile['file']); ?>" data-rex-id="<?php echo $xmlfile['rex_id']; ?>" data-time="<?php echo $xmlfile['mod_time']; ?>">
+                    <span><?php echo $xmlfile['address']; ?></span>
+                </option>
+            <?php endforeach; ?>
+        </select>
+
+    <?php } else { ?>
+        <?php if(isset($new_file)) { ?>
+            <div id="alert" class="alert update clearfix">
+                <p>This listing has been updated on <strong>Rex</strong> on <?php echo $new_date; ?>. Would you like to update?</p>
+
+                <button id="update-listing">UPDATE</button>
+            </div>
+            
+            <input id="Listing-xmlfile-updated_file" type="hidden" name="updated_file" value="<?php echo asset('storage/app/media/' . $new_file); ?>">
+
+            <input id="Listing-xmlfile-updated_time" type="hidden" name="updated_time" value="<?php echo $new_time; ?>">
+
+        <?php } else { ?>
+            <div class="alert clearfix">
+                <p>This listing is up to date</p>
+            </div>
+        <?php } ?>
+    <?php } ?>
+
+    <input id="Listing-xmlfile-rex_id" type="hidden" name="Listing[xmlfile][0][rex_id]" value="<?php if(isset($selectedValues)) { echo $selectedValues[0]['rex_id']; } ?>">
+
+    <input id="Listing-xmlfile-mod_time" type="hidden" name="Listing[xmlfile][1][mod_time]" value="<?php if(isset($selectedValues)) { echo $selectedValues[1]['mod_time']; } ?>">
+</div>
+
+<script type="text/javascript">
+    function convertToSlug(Text) {
+        return Text
+            .toLowerCase()
+            .replace(/ /g,'-')
+            .replace(/[^\w-]+/g,'')
+            ;
+    }
+
+    var monthName_array = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    function getMonthID(m) {
+        for(var i = 0; i < monthName_array.length; i++) {
+            if (m  == monthName_array[i]) {
+                return i;
+            }
+        }
+    }
+
+    var monthFullName_array = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    function getMonthName(m) {
+        for(var i = 0; i < monthFullName_array.length; i++) {
+            if (m == i) {
+                return monthFullName_array[i];
+            }
+        }
+    }
+
+    var dayName_array = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+    function getDayName(d) {
+        for(var i = 0; i < dayName_array.length; i++) {
+            if (d  == i) {
+                return dayName_array[i];
+            }
+        }
+    }
+
+    function basename(path) {
+        return path.split('/').pop();
+    }
+
+    function serverpath(path) {
+        var b = basename(path);
+
+        return path.substring(0, path.length - b.length);
+    }
+
+    function getDetail(id, url, rex_id, mod_time, update = false) {
+        $.ajax({
+            type: 'GET',
+			dataType: 'XML',
+            url: url,
+        }).done(function(data) {
+            console.log(data);
+
+            var street_number = $(data).find('streetNumber').text();
+            var street = $(data).find('street').text();
+            var suburb = $(data).find('suburb').text();
+            var price = $(data).find('priceView').text();
+            var under_offer = $(data).find('underOffer').text();
+
+            var inspection = $(data).find('inspection').text();
+            
+            var bedroom = $(data).find('bedrooms').text();
+            var bathroom = $(data).find('bathrooms').text();
+            var carport = $(data).find('carports').text();
+            
+            var headline = $(data).find('headline').text();
+            var description = $(data).find('description').text();
+
+            var images = $(data).find('img');
+
+             $(document).find('#Form-field-Listing-xmlfile_id').val(id);
+
+            $(document).find('#Listing-xmlfile-rex_id').val(rex_id);
+            $(document).find('#Listing-xmlfile-mod_time').val(mod_time);
+            
+            $(document).find('#Form-field-Listing-address').val(street_number + " " + street);
+            $(document).find('#Form-field-Listing-slug').val(convertToSlug(street_number + " " + street));
+            $(document).find('#Form-field-Listing-suburb').val(suburb);
+            
+            $(document).find('#Form-field-Listing-price').val(price);
+
+            if(under_offer == "yes") {
+                $(document).find('#Form-field-Listing-under_offer').attr('checked', true);
+            }
+
+            if(inspection != "") {
+                var time_array = inspection.split(' ');
+                console.log(time_array);
+
+                var date_array = time_array[0].split('-');
+                console.log(date_array);
+                
+                var d = new Date(parseInt(date_array[2]), parseInt(getMonthID(date_array[1])), parseInt(date_array[0]), 0, 0, 0);
+                console.log(d.getDay());
+
+                $(document).find('#Form-field-Listing-inspection').val(getDayName(d.getDay()) + ", " + date_array[0] + " " + getMonthName(d.getMonth()) + " " + date_array[2] + " " + time_array[1]);
+            }
+
+            $(document).find('#Form-field-Listing-facilities-0-bedroom').val(bedroom);
+            $(document).find('#Form-field-Listing-facilities-1-bathroom').val(bathroom);
+            $(document).find('#Form-field-Listing-facilities-2-carport').val(carport);
+            
+            var description_array = description.split("\n");
+            var description_text = "";
+            
+            if (headline != "") {
+                description_text = '<p class="lead">' + headline + '</p>';	
+            }
+
+            for(var i = 0; i < description_array.length; i++) {
+                if (description_array[i] != "") {
+                    description_text += '<p>' + description_array[i] + '</p>';
+                }
+            }
+
+            $(document).find('#Form-field-Listing-description').val(description_text);
+            
+            var images_array = [];
+
+            var count = 0;
+            $(images).each(function(){
+                if($(this).attr('url')) {
+                    images_array.push($(this).attr('url'));
+                    
+                    var template = $('#Listing-galleryimages-template').html();
+
+                    $(template).attr('id', 'Listing-galleryimages-' + count + '-image').appendTo($('#Form-field-Listing-galleryimages-group').find('.image-container'));
+
+                    $(document).find('#Listing-galleryimages-' + count + '-image').find('img').attr('src', $(this).attr('url'));
+                    
+                    $(document).find('#Listing-galleryimages-' + count + '-image').find('[name="basename"]').attr('name', 'Listing[galleryimages]['+ count +'][basename]').val(basename($(this).attr('url')));
+                }
+
+                count++;
+            });
+
+            $(document).find('#Form-field-Listing-image_path').val(serverpath(images_array[0]));
+
+            $(document).find('[name="Listing[posterimage]"]').val(images_array[0]);
+
+            $(document).find('[name="Listing[posterimage]"]').next().find('img').attr('src', images_array[0]);
+            
+            $('#Form-field-Listing-images-group').find('[name="Listing[image_path]"]').val(serverpath(images_array[0]));
+
+            //$(document).find('#Form-field-Listing-images').val(JSON.stringify(images_array));*/
+            if (update) {
+                $(document).find('#alert').removeClass('update');
+
+                $(document).find('#alert').find('button').remove();
+
+                $(document).find('p').text("This listing has been updated. Click the 'Save' button to save the changes.");
+            }
+        });
+    };
+
+    $('#listing-option').on('change', function() {
+        getDetail( this.value, $(this).children("option").filter(":selected").attr('data-file'), $(this).children("option").filter(":selected").attr('data-rex-id'), $(this).children("option").filter(":selected").attr('data-time') );
+    });
+
+    $('#update-listing').on('click', function(e) {
+        e.preventDefault();
+
+        getDetail( $('#Listing-xmlfile-updated_file').val(), $('#Listing-xmlfile-rex_id').val(), $('#Listing-xmlfile-updated_time').val(), true );
+    });
+</script>

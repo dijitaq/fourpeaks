@@ -1,0 +1,10 @@
+name: Xmlfiles
+form: $/dooze/listings/models/xmlfile/fields.yaml
+modelClass: Dooze\Listings\Models\Xmlfile
+defaultRedirect: dooze/listings/xmlfiles
+create:
+    redirect: 'dooze/listings/xmlfiles/update/:id'
+    redirectClose: dooze/listings/xmlfiles
+update:
+    redirect: dooze/listings/xmlfiles
+    redirectClose: dooze/listings/xmlfiles

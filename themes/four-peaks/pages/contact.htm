@@ -1,0 +1,98 @@
+title = "Contact"
+url = "/contact"
+layout = "default"
+meta_title = "Contact Four Peaks Real Estate"
+meta_description = "If you would like to know more about our listings or what we have to offer, simply contact Four Peaks Real Estate"
+is_hidden = 0
+
+[contactform]
+==
+{% put page_script %}
+    <script>
+        $(window).on('ajaxInvalidField', function(event, fieldElement, fieldName, errorMsg, isFirst) {
+            $(fieldElement).addClass('is-invalid-input');
+        });
+
+        $(document).on('ajaxPromise', '[data-request]', function() {
+            //$(document).find(form).find('.is-invalid-input').removeClass('is-invalid-input');
+            $(document).find('[data-request]').find('.is-invalid-input').removeClass('is-invalid-input');
+        });
+    </script>
+{% endput %}
+
+<section id="contact">
+    <div class="full-screen-image" data-interchange="[{{ 'assets/img/background-contact-small.jpg'|theme }}, small], [{{ 'assets/img/background-contact-medium.jpg'|theme }}, medium], [{{ 'assets/img/background-contact-medium.jpg'|theme }}, large]">
+        
+    </div>
+    
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell small-12 large-3">
+                <h2>Contact</h2>
+            </div>
+            
+            <div class="cell small-12 large-9">
+                {% partial "page/contact.htm" %}
+                
+                <div class="grid-x grid-margin-x">
+                    <div class="cell small-12 large-6">
+                        <div class="grid-x grid-margin-x">
+                            <div class="cell shrink">
+                                <img src="{{ 'assets/img/headshot-donna.jpg'|theme }}">
+                            </div>
+
+                            <div class="cell auto">
+                                {% partial "page/contact-donna.htm" %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cell small-12 large-6">
+                        <div class="grid-x grid-margin-x">
+                            <div class="cell shrink">
+                                <img src="{{ 'assets/img/headshot-jordan.jpg'|theme }}">
+                            </div>
+
+                            <div class="cell auto">
+                                {% partial "page/contact-jordan.htm" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="grid-x grid-margin-x">
+            <div class="cell small-12 small-offset-0 large-9 large-offset-3">
+                <div class="callout hide">
+                    <p></p>
+                </div>
+
+                {% flash %}
+                    <p
+                        data-control="flash-message"
+                        class="flash-message fade {{ type }}"
+                        data-interval="5">
+                        {{ message }}
+                    </p>
+                {% endflash %}
+                
+                {% component 'contactform' %}
+                
+                <div class="grid-x grid-margin-x">
+                    <div class="cell small-12 small-offset-0 medium-7 medium-offset-5 large-8 large-offset-4 text-center medium-text-left">
+                        <ul id="social-media-navigation" class="clearfix">
+                            <li>
+                                <a><i class="fab fa-facebook-f fa-2x"></i></a>
+                            </li>
+
+                            <li>
+                                <a><i class="fab fa-twitter fa-2x"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

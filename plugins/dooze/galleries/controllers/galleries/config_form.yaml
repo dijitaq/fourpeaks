@@ -1,0 +1,10 @@
+name: Galleries
+form: $/dooze/galleries/models/gallery/fields.yaml
+modelClass: Dooze\Galleries\Models\Gallery
+defaultRedirect: dooze/galleries/galleries
+create:
+    redirect: 'dooze/galleries/galleries/update/:id'
+    redirectClose: dooze/galleries/galleries
+update:
+    redirect: dooze/galleries/galleries
+    redirectClose: dooze/galleries/galleries

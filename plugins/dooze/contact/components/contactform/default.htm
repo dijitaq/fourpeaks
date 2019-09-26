@@ -1,0 +1,24 @@
+<form class="grid-x grid-margin-x" data-request="contactform::onSend" data-request-validate data-request-flash>
+    <input type="hidden" name="subject" value="Four Peaks website message from:" >
+
+    <div class="cell small-12 medium-5 large-4">
+        <input type="text" name="name" placeholder="Your name">
+        <span data-validate-for="name"></span>
+
+        <input type="email" name="email" placeholder="Your email">
+        <span data-validate-for="email"></span>
+        
+        <input type="text" name="phone" placeholder="Your phone">
+    </div>
+    
+    <div class="cell small-12 medium-7 large-8">
+        <textarea name="content"></textarea>
+        <span data-validate-for="content"></span>
+    </div>
+    
+    <div class="cell small-12 medium-5 large-4">
+        <button class="button" type="submit">
+            <i class="fas fa-spinner fa-spin"></i><span>Send form</span>
+        </button>
+    </div>
+</form>

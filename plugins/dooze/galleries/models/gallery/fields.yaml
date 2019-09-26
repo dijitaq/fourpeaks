@@ -1,0 +1,24 @@
+fields:
+    title:
+        label: Title
+        span: left
+        type: text
+    slug:
+        label: Slug
+        span: right
+        preset:
+            field: title
+            type: slug
+        type: text
+    images:
+        label: Images
+        mode: image
+        imageWidth: '100'
+        imageHeight: '100'
+        fileTypes: 'jpg, png'
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: full
+        type: fileupload

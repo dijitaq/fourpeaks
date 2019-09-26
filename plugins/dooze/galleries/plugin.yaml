@@ -1,0 +1,11 @@
+plugin:
+    name: 'dooze.galleries::lang.plugin.name'
+    description: 'dooze.galleries::lang.plugin.description'
+    author: 'Agency3'
+    icon: oc-icon-image
+    homepage: 'https://agency3.com.au'
+navigation:
+    main-menu-item:
+        label: Galleries
+        url: dooze/galleries/galleries
+        icon: icon-image

@@ -1,0 +1,59 @@
+{% set gallery = __SELF__.gallery %}
+
+<div class="grid-x">
+    <div class="cell">
+        <div class="grid-x">
+            <div class="cell auto">
+                <a href="{{ gallery.images[0].path }}" class="button-area" data-fancybox="gallery" data-caption="{{ gallery.images[0].title }}" style="background-image: url({{ gallery.images[0].path }})"></a>
+            </div>
+
+            <div class="cell auto">
+                <a href="{{ gallery.images[1].path }}" class="button-area" data-fancybox="gallery" data-caption="{{ gallery.images[1].title }}" style="background-image: url({{ gallery.images[1].path }})"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="cell">
+        <div class="grid-x">
+            <div class="cell auto text">
+                {% partial "page/area.htm" %}
+            </div>
+        </div>
+    </div>
+
+    <div class="cell">
+        <div class="grid-x">
+            <div class="cell auto">
+                <a href="{{ gallery.images[2].path }}" class="button-area" data-fancybox="gallery" data-caption="{{ gallery.images[2].title }}" style="background-image: url({{ gallery.images[2].path }})"></a>
+            </div>
+
+            <div class="cell auto">
+                <a href="{{ gallery.images[3].path }}" class="button-area" data-fancybox="gallery" data-caption="{{ gallery.images[3].title }}" style="background-image: url({{ gallery.images[3].path }})"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="cell">
+        <div class="grid-x">
+        	<div class="cell auto">
+            	<a href="{{ gallery.images[4].path }}" class="button-area" data-fancybox="gallery" data-caption="{{ gallery.images[4].title }}" style="background-image: url({{ gallery.images[4].path }})"></a>
+            </div>
+
+            <div class="cell auto">
+            	<a href="{{ gallery.images[5].path }}" class="button-area" data-fancybox="gallery" data-caption="{{ gallery.images[5].title }}" style="background-image: url({{ gallery.images[5].path }})"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="cell">
+        <div class="grid-x">
+            <div class="cell auto">
+                <a href="{{ gallery.images[6].path }}" class="button-area" data-fancybox="gallery" data-caption="{{ gallery.images[6].title }}" style="background-image: url({{ gallery.images[6].path }})"></a>
+            </div>
+
+            <div class="cell auto">
+                <a href="{{ gallery.images[6].path }}" class="button-area" data-fancybox="gallery" data-caption="{{ gallery.images[6].title }}" style="background-image: url({{ gallery.images[6].path }})"></a>
+            </div>
+        </div>
+    </div>
+</div>

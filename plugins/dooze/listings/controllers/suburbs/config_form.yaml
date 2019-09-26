@@ -1,0 +1,10 @@
+name: Suburbs
+form: $/dooze/listings/models/suburb/fields.yaml
+modelClass: Dooze\Listings\Models\Suburb
+defaultRedirect: dooze/listings/suburbs
+create:
+    redirect: 'dooze/listings/suburbs/update/:id'
+    redirectClose: dooze/listings/suburbs
+update:
+    redirect: dooze/listings/suburbs
+    redirectClose: dooze/listings/suburbs

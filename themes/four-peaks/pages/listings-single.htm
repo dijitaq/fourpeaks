@@ -1,0 +1,235 @@
+title = "listings-single"
+url = "/listings/:rex_id/:slug"
+layout = "default"
+is_hidden = 0
+
+[builderDetails]
+modelClass = "Dooze\Listings\Models\Listing"
+identifierValue = "{{ :rex_id }}"
+modelKeyColumn = "rex_id"
+displayColumn = "rex_id"
+notFoundMessage = "No listing were found"
+==
+<?php
+function onEnd() {
+	$type = "";
+	
+	if ($this['builderDetails']->record->category_id == "sale") {
+		$type = "For sale: ";
+		
+	} else {
+		$type = "For lease: ";	
+	}
+	
+    $this->page->meta_title = "Four Peaks Real Estate - " . $type . $this['builderDetails']->record->suburb . " - " .$this['builderDetails']->record->address;
+}
+?>
+==
+{% set record = builderDetails.record %}
+{% set displayColumn = builderDetails.displayColumn %}
+{% set notFoundMessage = builderDetails.notFoundMessage %}
+
+{% put style %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+{% endput %}
+
+{% put script_library %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKJIH7Ywy7JzOcsm9NhbpiRnCraSx5Dzk"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+{% endput %}
+
+{% put page_script %}
+<script>
+    $('.carousel').on('setPosition', function(event, slick){
+        var h = $(slick.$slides[0]).find('img').height();
+
+        $(slick.$slider).find('.slick-slide').height(h);
+    } );
+
+    $('.carousel').slick({
+        mobileFirst:true,//add this one
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    centerMode: true,
+                    prevArrow: '<button type="button" class="slick-arrow slick-prev"><i class="fas fa-angle-left"></i></button>',
+                    nextArrow: '<button type="button" class="slick-arrow slick-next"><i class="fas fa-angle-right"></i></button>',
+                    arrows: true,
+                    slidesToShow: 3,
+                }
+            },
+            {
+                breakpoint: 640,
+                settings: {
+                    centerMode: false,
+                    prevArrow: '<button type="button" class="slick-arrow slick-prev"><i class="fas fa-angle-left"></i></button>',
+                    nextArrow: '<button type="button" class="slick-arrow slick-next"><i class="fas fa-angle-right"></i></button>',
+                    arrows: true,
+                    slidesToShow: 2,
+                }
+            },
+            {
+                breakpoint: 320,
+                settings: {
+                    centreMode: false,
+                    arrows: false,
+                    slidesToShow: 1,
+                }
+            }
+        ]
+    });
+
+    function initialize_gmap() {
+        var latlang = new google.maps.LatLng( {{ record.coordinate[0].latitude }}, {{ record.coordinate[1].longitude }} );
+        
+        var options = {
+            center: latlang,
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            };
+
+        var map = new google.maps.Map(document.getElementById("gmap"),  options);
+
+        var marker = new google.maps.Marker({
+            position: latlang,
+            map: map,
+        });
+    }
+
+    initialize_gmap();
+</script>
+{% endput %}
+
+<section id="listing-detail">
+{% if record %}
+    <div class="carousel-container">
+        <div class="carousel">
+            {% for image in record.gallery_images %}
+                <div>
+                    <img src="{{ record.image_path|raw ~ image.type ~ '/' ~ image.thumb }}">
+
+                    <a href="{{ record.image_path|raw ~ image.type ~ '/' ~ image.url }}" data-fancybox>
+                        <i class="fas fa-search-plus"></i>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if record.on_offer %}
+            <p class="under-offer">Under Offer</p>
+        {% endif %}
+
+        {% if record.events %}
+            {% set break = false %}
+            {% for event in record.events if not break %}
+                {% set t = time %}
+                {% set l_t = event[3].event_unix_time %}
+                {% if (l_t > t) %}
+                    <p class="inspection">{{ event[0].display ~ " " ~ event[1].event_date ~ " " ~ event[2].event_time }}</p>
+
+                    {% set break = true %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+            <div class="cell small-12 medium-7 large-8">
+                <h3>{{ record.suburb }} - {{ record.address }}</h3>
+
+                <p>{% if record.category_id == "sale" %} BUY ME {% else %} LEASE ME {% endif %}{{ record.price }}</p>
+            </div>
+
+            <div class="cell small-12 medium-5 large-4 text-center medium-text-left">
+                <ul class="icons clearfix">
+                    <li>
+                        <span>
+                            {% if(record.facilities[0].bedrooms) %}
+                                {{ record.facilities[0].bedrooms }}
+                            {% else %}
+                            -
+                            {% endif %}
+                        </span>
+                        <img src="{{ 'assets/img/icon-bed.svg'|theme }}" width="40" height="40">
+                    </li>
+
+                    <li>
+                        <span>
+                            {% if(record.facilities[1].bathrooms) %}
+                                {{ record.facilities[1].bathrooms }}
+                            {% else %}
+                            -
+                            {% endif %}
+                        </span>
+                        <img src="{{ 'assets/img/icon-bath.svg'|theme }}" width="40" height="40">
+                    </li>
+
+                    <li>
+                        <span>
+                            {% if(record.facilities[2].total_car_accom) %}
+                                {{ record.facilities[2].total_car_accom }}
+                            {% else %}
+                            -
+                            {% endif %}
+                        </span>
+                        <img src="{{ 'assets/img/icon-car.svg'|theme }}" width="40" height="40">
+                    </li>
+
+                    <li>
+                        <span>Land Area</span>
+                        <span class="data">
+                            {% if(record.facilities[3].landarea) %}
+                                {{ record.facilities[3].landarea }}
+                            {% else %}
+                            -
+                            {% endif %}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="grid-x grid-margin-x">
+            <div class="cell small-12 large-8">
+                {{ record.description|raw }}
+
+                <hr>
+
+                <p class="lead">Location</p>
+
+                <div id="gmap"></div>
+            </div>
+
+            <div class="agents cell small-12 large-4">
+                <hr>
+
+                <h4>Agent contact details</h4>
+
+                <div class="grid-x grid-margin-x">
+                {% for agent in record.agents %}
+                    {% if(agent.name) %}
+                        <div class="cell small-12 medium-6 large-12">
+                            <div class="grid-x grid-margin-x">
+                                <div class="cell small-4">
+                                    <img src="{{ agent.image.url }}">
+                                </div>
+
+                                <div class="cell auto">
+                                    <p>{{ agent.name }}<br><i class="fas fa-phone"></i> {{ agent.phone }}<br><i class="fas fa-envelope-open-text"></i> <a href="mailto:{{ agent.email }}">Send email</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    {{ notFoundMessage }}
+{% endif %}
+</section>

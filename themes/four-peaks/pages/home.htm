@@ -1,0 +1,37 @@
+title = "Home"
+url = "/"
+layout = "default"
+meta_title = "Four Peaks Real Estate - We make buying, selling and managing property simple."
+meta_description = "Four Peaks Real Estate, we make buying, selling and managing property simple."
+is_hidden = 0
+
+[viewBag]
+featured_image_desktop = "/background-home-desktop.jpg"
+featured_image_tablet = "/background-home-tablet.jpg"
+featured_image_mobile = "/background-home-mobile.jpg"
+==
+<section id="home">
+
+    <div class="full-screen-image overlay" data-interchange="[{{ this.page.featured_image_mobile|media }}, small], {{ this.page.featured_image_tablet|media }}, medium], [{{ this.page.featured_image_desktop|media }}, large]">
+
+    
+
+        <!-- content -->
+
+        <p>We make buying, selling and<br>managing property simple.</p>
+
+        <!-- content -->
+
+
+        <div id="appraisal-cta">
+        	<a href="{{ 'appraisal'|page }}">
+        		<span class="left">
+        			<i class="fas fa-home fa-2x"></i>
+        		</span>
+
+        		<span class="right">Click here for a FREE market appraisal!</span>
+        	</a>
+        </div>
+    </div>
+
+</section>

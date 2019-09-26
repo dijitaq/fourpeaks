@@ -1,0 +1,25 @@
+<style>
+    figure {
+        width: 50%;
+        margin: 0;
+    }
+
+    figure img {
+        max-width: 100%;
+        display: inline-block;
+    }
+
+    figure figcaption {
+        font-size: 12px;
+        text-align: center;
+        display: block;
+    }
+</style>
+
+<div class="form-group text-field span-full">
+    <input id="Listing-posterimage" type="hidden" name="Listing[poster_image]" class="form-control" value="<?php if(isset($selectedValues)) { echo $selectedValues; } ?>">
+    
+    <figure>
+        <img id="Listing-posterimage-image" src="<?php if(isset($selectedValues)) { echo $selectedValues; } ?>" class="listing-poster-image">
+    </figure>
+</div>

@@ -1,0 +1,59 @@
+fields:
+    address:
+        label: Address
+        span: auto
+        type: text
+    slug:
+        label: Slug
+        span: auto
+        hidden: 0
+        preset:
+            field: address
+            type: slug
+        type: text
+    suburb:
+        label: Suburb
+        span: full
+        type: text
+    price:
+        label: Price
+        span: auto
+        type: text
+    under_offer:
+        label: 'Under offer'
+        span: auto
+        type: checkbox
+    inspection:
+        label: 'Open for Inspection'
+        span: full
+        type: text
+    'facilities[0][bedrooms]':
+        label: Bedroom
+        span: auto
+        type: text
+    'facilities[1][bathrooms]':
+        label: Bathroom
+        span: auto
+        type: text
+    'facilities[2][garages]':
+        label: Cars
+        span: auto
+        type: text
+    description:
+        label: Description
+        size: large
+        span: full
+        type: textarea
+    image_path:
+        label: 'Image path'
+        span: full
+        hidden: 0
+        type: text
+    posterimage:
+        label: 'Poster image'
+        span: left
+        type: poster_image
+    galleryimages:
+        label: 'Gallery images'
+        span: right
+        type: gallery_images

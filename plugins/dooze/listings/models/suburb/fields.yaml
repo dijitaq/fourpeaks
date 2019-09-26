@@ -1,0 +1,12 @@
+fields:
+    suburb_name:
+        label: 'Suburb Name'
+        span: auto
+        type: text
+    slug:
+        label: Slug
+        span: auto
+        preset:
+            field: suburb_name
+            type: slug
+        type: text

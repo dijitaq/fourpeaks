@@ -1,0 +1,58 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ this.page.meta_title }}</title>
+        
+        <meta name="title" content="{{ this.page.meta_title }}">
+        <meta name="description" content="{{ this.page.meta_description }}">
+        
+        <link rel="stylesheet" href="{{ 'assets/css/app.css'|theme }}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+        {% placeholder style %}
+        
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-137347334-2"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+		
+			gtag('config', 'UA-137347334-2');
+		</script>
+		
+        <!-- Google Tag Manager -->
+		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-5R9L5CV');</script>
+		<!-- End Google Tag Manager -->
+    </head>
+
+    <body>
+	    <!-- Google Tag Manager (noscript) -->
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5R9L5CV"
+		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+		
+	    {% if (this.page.id == "home") %}
+	    	{% partial "site/header-teal.htm" %}
+	    {% else %}
+	    	{% partial "site/header-black.htm" %}
+	    {% endif %}
+		
+        {% page %}
+
+        <script src="{{ 'assets/js/vendor/jquery.js'|theme }}"></script>
+        <script src="{{ 'assets/js/vendor/what-input.js'|theme }}"></script>
+        <script src="{{ 'assets/js/vendor/foundation.js'|theme }}"></script>
+        {% placeholder script_library %}
+        <script src="{{ 'assets/js/app.js'|theme }}"></script>
+        {% framework extras %}
+        {% placeholder page_script %}
+    </body>
+</html>

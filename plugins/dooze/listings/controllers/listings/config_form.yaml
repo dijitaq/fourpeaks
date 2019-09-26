@@ -1,0 +1,10 @@
+name: Listings
+form: $/dooze/listings/models/listing/fields.yaml
+modelClass: Dooze\Listings\Models\Listing
+defaultRedirect: dooze/listings/listings
+create:
+    redirect: 'dooze/listings/listings/update/:id'
+    redirectClose: dooze/listings/listings
+update:
+    redirect: dooze/listings/listings
+    redirectClose: dooze/listings/listings

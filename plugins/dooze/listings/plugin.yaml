@@ -1,0 +1,16 @@
+plugin:
+    name: 'dooze.listings::lang.plugin.name'
+    description: 'dooze.listings::lang.plugin.description'
+    author: 'Firdaus Riyanto'
+    icon: oc-icon-home
+    homepage: ''
+navigation:
+    main-menu-item:
+        label: Listings
+        url: dooze/listings/listings
+        icon: icon-home
+        sideMenu:
+            side-menu-item:
+                label: Listings
+                url: dooze/listings/listings
+                icon: icon-home

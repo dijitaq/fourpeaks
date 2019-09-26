@@ -1,0 +1,10 @@
+/install_files
+/plugins/anandpatel
+/plugins/october
+/plugins/rainlab
+/storage/cms
+/storage/framework
+/storage/logs
+/storage/temp
+/vendor
+install.php

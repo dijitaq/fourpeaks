@@ -1,0 +1,44 @@
+<header id="main-header" class="teal">
+    <div class="grid-container">
+        <div class="grid-x">
+            <div class="cell small-12 medium-shrink text-center" style="position: relative">
+                <a href="{{ 'home'|page }}">
+                    <img data-interchange="[ {{ 'assets/img/logo-teal-small.png'|theme }}, small], [ {{ 'assets/img/logo-teal-small.png'|theme }}, medium], [ {{ 'assets/img/logo-teal-large.png'|theme }}, large]">
+                </a>
+                
+                <a id="toggle-navigation">
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+
+            <div class="cell small-12 medium-auto">
+                <ul id="main-navigation" class="clearfix">
+                    <li class="{% if this.page.id == 'about' %}is-active{% endif %}">
+                        <a href="{{ 'about'|page }}">About</a>
+                    </li>
+
+                    <li class="{% if this.page.id == 'team' %}is-active{% endif %}">
+                        <a href="{{ 'team'|page }}">Team</a>
+                    </li>
+
+                    <li class="{% if this.page.id == 'buy' %}is-active{% endif %}">
+                        <a href="{{ 'buy'|page }}">Buy</a>
+                    </li>
+
+                    <li class="{% if this.page.id == 'lease' %}is-active{% endif %}">
+                        <a href="{{ 'lease'|page }}">Lease</a>
+                    </li>
+
+                    <li class="{% if this.page.id == 'area' %}is-active{% endif %}">
+                        <a href="{{ 'area'|page }}">Area</a>
+                    </li>
+
+                    <li class="{% if this.page.id == 'contact' %}is-active{% endif %}">
+                        <a href="{{ 'contact'|page }}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
